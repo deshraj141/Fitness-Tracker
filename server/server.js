@@ -30,10 +30,22 @@ app.use('/api/water', waterRoutes);
 app.use('/api/weight', weightRoutes);
 
 // MongoDB Connection
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/fitness-tracker';
-mongoose.connect(MONGODB_URI)
-    .then(() => console.log('Connected to MongoDB'))
-    .catch(err => console.error('MongoDB connection error:', err));
+const MONGODB_URI = process.env.MONGODB_URI;
+
+if (!MONGODB_URI) {
+    console.error('CRITICAL: MONGODB_URI is not defined in environment variables.');
+    // In production, we might want to exit if the DB is critical
+    if (process.env.NODE_ENV === 'production') {
+        process.exit(1);
+    }
+}
+
+mongoose.connect(MONGODB_URI || 'mongodb://localhost:27017/fitness-tracker')
+    .then(() => console.log('Connected to MongoDB Successfully'))
+    .catch(err => {
+        console.error('MongoDB connection error:', err.message);
+        if (process.env.NODE_ENV === 'production') process.exit(1);
+    });
 
 // Serve Static Assets in Production
 if (process.env.NODE_ENV === 'production') {
