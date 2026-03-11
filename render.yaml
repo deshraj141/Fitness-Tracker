@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: fitx-fitness-tracker
+    env: node
+    plan: free
+    buildCommand: npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        sync: false # Requires user to set this in Render UI
+      - key: JWT_SECRET
+        sync: false # Requires user to set this in Render UI
+      - key: FRONTEND_URL
+        sync: false # Set to your Render URL (e.g., https://fitness-tracker.onrender.com)
+      - key: VITE_BACKEND_URL
+        sync: false # Set to your Render URL + /api (e.g., https://fitness-tracker.onrender.com/api)
