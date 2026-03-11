@@ -1,0 +1,9 @@
+@import "tailwindcss";
+body {
+  @apply bg-gray-900 text-white;
+  font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+.bg-glass {
+  @apply bg-gray-900/50 backdrop-blur-xl border border-gray-800;
+}
