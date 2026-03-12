@@ -52,7 +52,8 @@ if (process.env.NODE_ENV === 'production') {
     const path = require('path');
     app.use(express.static(path.join(__dirname, '../client/dist')));
 
-    app.get('/*', (req, res) => {
+    // Use '*' instead of '/*' to avoid path-to-regexp errors during deployment
+    app.use((req, res) => {
     res.sendFile(path.resolve(__dirname, '../client', 'dist', 'index.html'));
 });
 }
